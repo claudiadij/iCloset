@@ -1,12 +1,12 @@
 import React from 'react';
 import GlobalStyle from './globalStyles';
+import "./App.css";
 import Home from './pages/HomePage/Home';
 import MyWardrobe from './pages/MyWardrobe/MyWardrobe';
-import Login from './pages/Login/Login';
-import SignUp from './pages/SignUp/SignUp';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import { Navbar, Footer } from './components';
+import CustomerAccess from './pages/CustomerAccess/CustomerAccess';
 
 function App() {
   return (
@@ -17,8 +17,7 @@ function App() {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/my-wardrobe' component={MyWardrobe} />
-        <Route path='/sign-up' component={SignUp} />
-        <Route path='/login' component={Login} />
+        <Route path='/customer-access/:action' component={CustomerAccess} />
       </Switch>
       <Footer />
     </Router>

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Button } from '../../globalStyles';
 
 import TopSectionBackgroundImg from "../../images/header2.png";
 
@@ -76,7 +75,7 @@ export const homeObjOne = {
   description:
     "Start by snapping a picture of each piece of clothing in your wardrobe. Then, you'll be asked to answer a few questions that will allow us categorize every single piece properly.",
   imgStart: '',
-  img: require('../../images/first.svg'),
+  img: require('../../images/first.svg').default,
   alt: 'Camera',
   start: ''
 };
@@ -93,7 +92,7 @@ export const homeObjTwo = {
   description:
     "After all of your clothes have been uploaded, you'll then have access to your entire wardrobe all at the touch of your fingertips. As time passes, you can delete old clothing you want to part ways with.",
   imgStart: 'start',
-  img: require('../../images/second.svg'),
+  img: require('../../images/second.svg').default,
   alt: 'Info',
   start: 'true'
 };
@@ -110,7 +109,7 @@ export const homeObjThree = {
     "Once you're satisfied with your wardrobe, click one button and have an outfit generated instantly. You can even select filters that will allow outfits to follow a colorscheme or be based around a particular piece!",
   buttonLabel: 'Sign Up Now',
   imgStart: '',
-  img: require('../../images/third.svg'),
+  img: require('../../images/third.svg').default,
   alt: 'Vault',
   start: ''
 };

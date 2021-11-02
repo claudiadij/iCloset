@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { FaMagento } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Container } from '../../globalStyles';
 
@@ -103,6 +102,9 @@ export const NavItemBtn = styled.li`
     align-items: center;
     width: 100%;
     height: 120px;
+    &:hover {
+      background: #ffb30c 
+    }
   }
 `;
 

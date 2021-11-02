@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../../globalStyles';
 import {
   FaFacebook,
   FaInstagram,
@@ -9,11 +8,6 @@ import {
 } from 'react-icons/fa';
 import {
   FooterContainer,
-  FooterSubscription,
-  FooterSubText,
-  FooterSubHeading,
-  Form,
-  FormInput,
   FooterLinksContainer,
   FooterLinksWrapper,
   FooterLinkItems,

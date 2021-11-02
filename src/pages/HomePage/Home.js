@@ -1,5 +1,5 @@
 import React from 'react';
-import { homeObjOne, homeObjTwo, homeObjThree, homeObjFour, TopSection } from './Data';
+import { homeObjOne, homeObjTwo, homeObjThree, TopSection } from './Data';
 import { InfoSection,  } from '../../components';
 
 function Home() {

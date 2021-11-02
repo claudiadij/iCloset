@@ -18,7 +18,6 @@ import {
 import LogoImg from "../../images/logo.jpg";
 
 function Navbar(props) {
-  const { logoSize } = props;
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -67,11 +66,11 @@ function Navbar(props) {
               </NavItem>
               <NavItemBtn>
                 {button ? (
-                  <NavBtnLink to='/sign-up'>
+                  <NavBtnLink to='/customer-access/signup'>
                     <Button primary>SIGN UP</Button>
                   </NavBtnLink>
                 ) : (
-                  <NavBtnLink to='/sign-up'>
+                  <NavBtnLink to='/customer-access/signup'>
                     <Button onClick={closeMobileMenu} fontBig primary>
                       SIGN UP
                     </Button>
@@ -79,7 +78,7 @@ function Navbar(props) {
                 )}
               </NavItemBtn>
               <NavItem>
-                <NavLinks to='/login' onClick={closeMobileMenu}>
+                <NavLinks to='/customer-access/signin' onClick={closeMobileMenu}>
                   Login
                 </NavLinks>
               </NavItem>
