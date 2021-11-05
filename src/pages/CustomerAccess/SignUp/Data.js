@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import React, { useContext, useRef, useState } from "react";
+import { Alert } from "../../../components/AccountBox/AccountBox.elements";
 import { Marginer } from "../../../components/Marginer/Marginer";
 import { AccountContext } from "../../../components/AccountBox/accountContext";
+import { useAuth } from "../../../contexts/AuthContexts";
+import { useHistory } from "react-router";
 import { 
     ComBoldLink,
     ComBoxContainer, 
@@ -11,107 +12,79 @@ import {
     ComMutedLink, 
     ComSubmitButton, 
     FieldContainer,
-    FieldError
 } from "../../../components/AccountBox/AccountBox.elements";
-
-const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{7,}$/;
-
-const validationSchema = yup.object({
-    firstName: yup.string().min(2, "Please enter your first name").required("First name is required"),
-    lastName: yup.string().min(2, "Please enter your last name").required("Lase name is required"),
-    email: yup.string().email("Please enter a valid email address").required("This is a required field"),
-    password: yup.string().matches(PASSWORD_REGEX, "Please enter a stronger password").required("This is a required field"),
-    confirmPassword: yup.string().when("password", {
-        is: val => (val && val.length > 0 ? true : false),
-        then: yup.string().oneOf([yup.ref("password")], "Password does not match")
-    }),
-});
 
 export function SignupForm(props) {
     const { switchToSignin } = useContext(AccountContext);
 
-    const onSubmit = (values) => {
-        alert(JSON.stringify(values));
-    };
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const confirmPasswordRef = useRef()
+    const { signup } = useAuth()
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+    const history = useHistory()
 
-    const formik = useFormik({ 
-        initialValues: { 
-            firstName: "", 
-            lastName: "", 
-            email: "", 
-            password:"", 
-            confirmPassword: "" 
-        },
-        validateOnBlur: true,
-        onSubmit,
-        validationSchema: validationSchema,
-    });
+    async function handleSubmit(e) {
+        e.preventDefault()
+
+        if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+            return setError('Passwords do not match')
+        }
+
+        try {
+            setError('')
+            setLoading(true)
+            await signup(emailRef.current.value, passwordRef.current.value)
+            history.push("/add-item")
+        } catch {
+            setError('Failed to create an account')
+        }
+
+        setLoading(false)
+    }
 
     return (
-        <ComBoxContainer>
-            <ComFormContainer onSubmit={formik.handleSubmit} >
-                <FieldContainer>
-                    <ComInput 
-                    name="firstName" 
-                    placeholder="First Name" 
-                    value={formik.values.firstName} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
-                    />
-                    <FieldError>{formik.touched.firstName && formik.errors.firstName ? formik.errors.firstName : ""}</FieldError>
-                </FieldContainer>
-                <FieldContainer>
-                    <ComInput 
-                    name="lastName" 
-                    placeholder="Last Name" 
-                    value={formik.values.lastName} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
-                    />
-                    <FieldError>{formik.touched.lastName && formik.errors.lastName ? formik.errors.lastName : ""}</FieldError>
-                </FieldContainer>
-                <FieldContainer>
-                    <ComInput 
-                    name="email" 
-                    placeholder="Email" 
-                    value={formik.values.email} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
-                    />
-                    <FieldError>{formik.touched.email && formik.errors.email ? formik.errors.email : ""}</FieldError>
-                </FieldContainer>
-                <FieldContainer>
-                    <ComInput 
-                    name="password" 
-                    type="password" 
-                    placeholder="Password" 
-                    value={formik.values.password} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
-                    />
-                    <FieldError>{formik.touched.password && formik.errors.password ? formik.errors.password : ""}</FieldError>
-                </FieldContainer>
-                <FieldContainer>
-                    <ComInput 
-                    name="confirmPassword" 
-                    type="password" 
-                    placeholder="Confirm Password" 
-                    value={formik.values.confirmPassword} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
-                    />
-                    <FieldError>{formik.touched.confirmPassword && formik.errors.confirmPassword ? formik.errors.confirmPassword : ""}</FieldError>
-                </FieldContainer>
-            </ComFormContainer>
-            <Marginer direction="vertical" margin={10} />
-            <Marginer direction="vertical" margin="1.6em" />    
-            <ComSubmitButton type="submit">Register</ComSubmitButton>
-            <Marginer direction="vertical" margin="1em" />
-            <ComMutedLink href="#" onClick={switchToSignin}>
-                Already have an account? 
-                <ComBoldLink>Login</ComBoldLink>
-            </ComMutedLink>
-            <Marginer direction="vertical" margin="1em" />
-        </ComBoxContainer>
+            <ComBoxContainer>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <ComFormContainer onSubmit={handleSubmit} >
+                    <FieldContainer>
+                        <ComInput 
+                        type="email" 
+                        placeholder="Email"
+                        ref={emailRef}
+                        required
+                        />
+                    </FieldContainer>
+                    <FieldContainer>
+                        <ComInput 
+                        name="password" 
+                        type="password" 
+                        placeholder="Password" 
+                        ref={passwordRef}
+                        required
+                        />
+                    </FieldContainer>
+                    <FieldContainer>
+                        <ComInput 
+                        name="confirmPassword" 
+                        type="password" 
+                        placeholder="Confirm Password" 
+                        ref={confirmPasswordRef}
+                        required
+                        />
+                    </FieldContainer>
+                <Marginer direction="vertical" margin={10} />
+                <Marginer direction="vertical" margin="1.6em" />    
+                <ComSubmitButton disabled={loading} type="submit">Register</ComSubmitButton>
+                </ComFormContainer>
+                <Marginer direction="vertical" margin="1em" />
+                <ComMutedLink href="#" onClick={switchToSignin}>
+                    Already have an account? 
+                    <ComBoldLink>Login</ComBoldLink>
+                </ComMutedLink>
+                <Marginer direction="vertical" margin="1em" />
+            </ComBoxContainer>
+       
     );
 }

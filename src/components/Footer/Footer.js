@@ -69,7 +69,7 @@ function Footer(props) {
         <SocialMediaWrap>
           <SocialLogo to='/'>
           <SocialIcon size ={logoSize}>
-            <img src={LogoImg} />
+            <img src={LogoImg} alt='iCloset logo' />
           </SocialIcon>
             iCloset
           </SocialLogo>

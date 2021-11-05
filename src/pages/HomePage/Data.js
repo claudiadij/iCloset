@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import TopSectionBackgroundImg from "../../images/header2.png";
 
@@ -33,7 +34,8 @@ const LogoContainer = styled.div`
 `;
 
 const SloganText = styled.h3`
-    margin: 0;
+    margin: 0 0 0 -70px;
+    padding: 0 0 0 -20px;
     line-height: 1;
     color: #fff;
     font-weight: 400;
@@ -62,6 +64,19 @@ export const HomeButton = styled.button`
   @media screen and (max-width: 960px) {
     width: 100%;
   }
+`;
+
+export const HomeButtonLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  // padding: 8px 16px;
+  height: 100%;
+  // width: 100%;
+  // border: none;
+  // outline: none;
 `;
 
 export const homeObjOne = {
@@ -120,8 +135,12 @@ export function TopSection(props) {
         <TopSectionContainer>
                 <LogoContainer>
                     <LogoContainer>
-                        <SloganText>Digitize your entire closet and have us generate your next fit.</SloganText>
-                        <HomeButton>Join Now</HomeButton>
+                        <SloganText>Digitize your entire closet and have us generate your next oufit</SloganText>
+                        <HomeButton >
+                          <HomeButtonLink to='/customer-access/signup'>
+                            Join Now
+                          </HomeButtonLink>
+                        </HomeButton>
                     </LogoContainer>
                 </LogoContainer>
         </TopSectionContainer>

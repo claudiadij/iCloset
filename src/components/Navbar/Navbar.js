@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import { Button } from '../../globalStyles';
+import { useAuth } from '../../contexts/AuthContexts'; 
+import { useHistory } from "react-router";
 import {
   Nav,
   NavbarContainer,
@@ -12,12 +14,25 @@ import {
   NavItem,
   NavItemBtn,
   NavLinks,
-  NavBtnLink
+  NavBtnLink,
+  LogoutButton
 } from './Navbar.elements';
 
 import LogoImg from "../../images/logo.jpg";
 
 function Navbar(props) {
+  const {currentUser, logout} = useAuth()
+  const history = useHistory()
+
+  async function handleLogout() {
+
+    try {
+      await logout()
+      history.push('/customer-access/signin')
+    } catch {
+      
+    }
+  }
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -46,7 +61,7 @@ function Navbar(props) {
           <NavbarContainer>
             <NavLogo to='/' onClick={closeMobileMenu}>
               <NavIcon logoSize="3em">
-                <img src={LogoImg  } />
+                <img src={LogoImg  } alt='iCloset logo' />
               </NavIcon>
               iCloset
             </NavLogo>
@@ -55,8 +70,8 @@ function Navbar(props) {
             </MobileIcon>
             <NavMenu onClick={handleClick} click={click}>
               <NavItem>
-                <NavLinks to='/' onClick={closeMobileMenu}>
-                  Home
+                <NavLinks to='/add-item' onClick={closeMobileMenu}>
+                  Add Item
                 </NavLinks>
               </NavItem>
               <NavItem>
@@ -64,22 +79,14 @@ function Navbar(props) {
                   My Wardrobe
                 </NavLinks>
               </NavItem>
-              <NavItemBtn>
-                {button ? (
-                  <NavBtnLink to='/customer-access/signup'>
-                    <Button primary>SIGN UP</Button>
-                  </NavBtnLink>
-                ) : (
-                  <NavBtnLink to='/customer-access/signup'>
-                    <Button onClick={closeMobileMenu} fontBig primary>
-                      SIGN UP
-                    </Button>
-                  </NavBtnLink>
-                )}
-              </NavItemBtn>
               <NavItem>
-                <NavLinks to='/customer-access/signin' onClick={closeMobileMenu}>
-                  Login
+                <NavLinks to='/generator' onClick={closeMobileMenu}>
+                  Generator
+                </NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks onClick={handleLogout} to='/customer-access/signin' >
+                  Logout
                 </NavLinks>
               </NavItem>
             </NavMenu>

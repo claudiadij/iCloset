@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -193,4 +192,14 @@ export const FieldError = styled.div`
   color: #b32e2e;
   font-size: 13px;
   min-height: 18px;
+`;
+
+export const Alert = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #f52891cc;
+  color: white;
+  margin-bottom: 15px; 
 `;
